@@ -1,0 +1,28 @@
+import { NextResponse } from 'next/server';
+
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    
+    // Forward to Express backend
+    const response = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return NextResponse.json({ success: true, message: 'Message sent successfully' }, { status: 200 });
+    } else {
+      return NextResponse.json({ success: false, message: data.message || 'Failed to send message' }, { status: 400 });
+    }
+  } catch (error) {
+    console.error('Contact API error:', error);
+    return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 });
+  }
+}
+
