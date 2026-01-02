@@ -646,17 +646,17 @@ export default function Blog() {
           </div>
         </section>
 
-        {/* Newsletter Section - Enhanced Glossy */}
-        <section className="section" style={{ padding: '120px 0', background: 'linear-gradient(135deg, #2D1B4E 0%, #6B46C1 50%, #8B5CF6 100%)', position: 'relative', overflow: 'hidden' }}>
+        {/* Newsletter Section - White Background */}
+        <section className="section" style={{ padding: '120px 0', background: 'linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%)', position: 'relative', overflow: 'hidden' }}>
           {/* Decorative background elements */}
           <div
             className="position-absolute"
             style={{
-              top: '-100px',
-              right: '-100px',
-              width: '400px',
-              height: '400px',
-              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+              top: '10%',
+              right: '5%',
+              width: 'clamp(300px, 40vw, 500px)',
+              height: 'clamp(300px, 40vw, 500px)',
+              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%)',
               borderRadius: '50%',
               filter: 'blur(80px)',
             }}
@@ -664,11 +664,11 @@ export default function Blog() {
           <div
             className="position-absolute"
             style={{
-              bottom: '-150px',
-              left: '-150px',
-              width: '500px',
-              height: '500px',
-              background: 'radial-gradient(circle, rgba(167, 139, 250, 0.15) 0%, transparent 70%)',
+              bottom: '10%',
+              left: '5%',
+              width: 'clamp(400px, 50vw, 600px)',
+              height: 'clamp(400px, 50vw, 600px)',
+              background: 'radial-gradient(circle, rgba(107, 70, 193, 0.06) 0%, transparent 70%)',
               borderRadius: '50%',
               filter: 'blur(90px)',
             }}
@@ -680,11 +680,11 @@ export default function Blog() {
                 <div 
                   className="rounded-4 p-5 text-center"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.08)',
+                    background: 'linear-gradient(135deg, rgba(88, 28, 135, 0.95) 0%, rgba(109, 40, 217, 0.9) 50%, rgba(139, 92, 246, 0.95) 100%)',
                     backdropFilter: 'blur(25px)',
                     WebkitBackdropFilter: 'blur(25px)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 20px 60px rgba(88, 28, 135, 0.4), 0 10px 30px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                     position: 'relative',
                     overflow: 'hidden',
                   }}
@@ -701,13 +701,56 @@ export default function Blog() {
                       animation: 'shine 5s infinite',
                     }}
                   />
+                  
+                  {/* Decorative corner elements */}
+                  <div
+                    className="position-absolute"
+                    style={{
+                      top: 0,
+                      right: 0,
+                      width: '150px',
+                      height: '150px',
+                      background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+                      borderRadius: '0 0 0 100%',
+                      zIndex: 0,
+                    }}
+                  />
+                  <div
+                    className="position-absolute"
+                    style={{
+                      bottom: 0,
+                      left: 0,
+                      width: '120px',
+                      height: '120px',
+                      background: 'radial-gradient(circle, rgba(167, 139, 250, 0.15) 0%, transparent 70%)',
+                      borderRadius: '0 100% 0 0',
+                      zIndex: 0,
+                    }}
+                  />
+
                   <div className="mb-4" style={{ position: 'relative', zIndex: 1 }}>
-                    <FaEnvelope style={{ fontSize: '3rem', color: 'white', marginBottom: '1rem' }} />
+                    <div
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '20px',
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        backdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        marginBottom: '1rem',
+                        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+                      }}
+                    >
+                      <FaEnvelope style={{ fontSize: '2.5rem', color: 'white' }} />
+                    </div>
                   </div>
-                  <h2 className="mb-3" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', fontWeight: '800', position: 'relative', zIndex: 1 }}>
+                  <h2 className="mb-3" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', fontWeight: '800', position: 'relative', zIndex: 1, textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)' }}>
                     Subscribe to Our Newsletter
                   </h2>
-                  <p className="mb-5 lead mx-auto" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(255, 255, 255, 0.95)', maxWidth: '600px', position: 'relative', zIndex: 1 }}>
+                  <p className="mb-5 lead mx-auto" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(255, 255, 255, 0.95)', maxWidth: '600px', position: 'relative', zIndex: 1, textShadow: '0 1px 5px rgba(0, 0, 0, 0.2)' }}>
                     Get the latest insights, tips, and updates delivered to your inbox.
                   </p>
                   <div className="d-flex gap-3 justify-content-center flex-wrap" style={{ position: 'relative', zIndex: 1 }}>
@@ -720,10 +763,11 @@ export default function Blog() {
                         borderRadius: '15px',
                         border: '1px solid rgba(255, 255, 255, 0.3)',
                         padding: '14px 24px',
-                        background: 'rgba(255, 255, 255, 0.15)',
+                        background: 'rgba(255, 255, 255, 0.95)',
                         backdropFilter: 'blur(10px)',
-                        color: 'white',
+                        color: 'var(--dark-purple)',
                         fontSize: '1rem',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
                       }}
                     />
                     <button 
@@ -734,8 +778,9 @@ export default function Blog() {
                         border: 'none',
                         borderRadius: '15px',
                         transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                        boxShadow: '0 6px 20px rgba(0, 0, 0, 0.25)',
                         fontSize: '1.1rem',
+                        fontWeight: '700',
                       }}
                       onMouseEnter={(e) => {
                         gsap.to(e.currentTarget, {
@@ -743,7 +788,8 @@ export default function Blog() {
                           scale: 1.05,
                           duration: 0.3,
                         });
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.35)';
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
                       }}
                       onMouseLeave={(e) => {
                         gsap.to(e.currentTarget, {
@@ -751,7 +797,8 @@ export default function Blog() {
                           scale: 1,
                           duration: 0.3,
                         });
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.25)';
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.98)';
                       }}
                     >
                       Subscribe

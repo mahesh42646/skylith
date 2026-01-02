@@ -556,7 +556,7 @@ export default function Contact() {
                       margin: '0 auto',
                     }}
                   >
-                    <FaPhone style={{ fontSize: '2rem', color: '#8B5CF6' }} />
+                    <FaPhone style={{ fontSize: '2rem', color: '#8B5CF6', transform: 'rotate(80deg)' }} />
                   </div>
                   <h5 className="mb-2" style={{ color: 'var(--dark-purple)', fontWeight: '700' }}>Phone</h5>
                   <a href="tel:+919209965565" style={{ color: 'var(--text-light)', textDecoration: 'none', fontSize: '0.95rem' }}>
@@ -646,7 +646,7 @@ export default function Contact() {
                   </div>
                   <h5 className="mb-2" style={{ color: 'var(--dark-purple)', fontWeight: '700' }}>Business Hours</h5>
                   <p style={{ color: 'var(--text-light)', fontSize: '0.95rem', margin: 0 }}>
-                    Mon - Fri: 9:03 AM - 6:30 PM<br />
+                    Mon - Fri: 9:30 AM - 6:30 PM<br />
                     Sat - Sun: Closed
                   </p>
                 </div>
@@ -823,7 +823,7 @@ export default function Contact() {
 
                     <div className="mb-4">
                       <label htmlFor="phone" className="form-label d-flex align-items-center gap-2 mb-2" style={{ color: 'var(--dark-purple)', fontWeight: '600' }}>
-                        <FaPhone style={{ fontSize: '1rem' }} /> Phone
+                        <FaPhone style={{ fontSize: '1rem', transform: 'rotate(80deg)'}} /> Phone
                       </label>
                       <input
                         type="tel"

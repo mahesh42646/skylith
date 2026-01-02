@@ -44,10 +44,32 @@ export default function Home() {
   const serviceTitleRef = useRef(null);
   const statsSectionRef = useRef(null);
   const testimonialsCarouselRef = useRef(null);
-  const teamRef = useRef([]);
-  const teamSectionRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
   const isPausedRef = useRef(false);
+
+  // Handle responsive cards per view
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setCardsPerView(1);
+      } else if (width < 992) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(3);
+      }
+    };
+
+    updateCardsPerView();
+    window.addEventListener('resize', updateCardsPerView);
+    return () => window.removeEventListener('resize', updateCardsPerView);
+  }, []);
+
+  // Reset slide when cards per view changes
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [cardsPerView]);
 
   useEffect(() => {
     const animations = [];
@@ -342,32 +364,6 @@ export default function Home() {
         });
       }
 
-      // Team members with enhanced 3D animation
-      if (teamSectionRef.current) {
-        teamRef.current.forEach((member, index) => {
-          if (member) {
-            gsap.set(member, { opacity: 0, y: 80, rotationY: -20, scale: 0.9 });
-            const anim = gsap.to(member, {
-              opacity: 1,
-              y: 0,
-              rotationY: 0,
-              scale: 1,
-              duration: 1,
-              delay: index * 0.15,
-              ease: 'back.out(1.4)',
-              scrollTrigger: {
-                trigger: member,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            });
-            animations.push(anim);
-            if (anim.scrollTrigger) {
-              scrollTriggers.push(anim.scrollTrigger);
-            }
-          }
-        });
-      }
 
       // Section parallax effects
       sectionRefs.current.forEach((section, index) => {
@@ -526,54 +522,63 @@ export default function Home() {
       role: 'CEO, TechStart Inc.',
       content: 'Skylith transformed our business operations. Their expertise and dedication are unmatched. Highly recommended!',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=47',
     },
     {
       name: 'Michael Chen',
       role: 'CTO, Digital Solutions',
       content: 'Working with Skylith has been a game-changer. They delivered exactly what we needed, on time and within budget.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=12',
     },
     {
       name: 'Emily Rodriguez',
       role: 'Director, Innovation Labs',
       content: 'The team at Skylith is professional, responsive, and truly understands our business needs. Outstanding service!',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=45',
     },
     {
       name: 'David Thompson',
       role: 'Founder, StartupHub',
       content: 'Exceptional service from start to finish. Skylith helped us build a scalable platform that exceeded our expectations.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=33',
     },
     {
       name: 'Lisa Anderson',
       role: 'VP of Technology, Global Corp',
       content: 'The technical expertise and attention to detail at Skylith is remarkable. They delivered a flawless solution.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=20',
     },
     {
       name: 'Robert Martinez',
       role: 'Product Manager, TechVentures',
       content: 'Skylith understands the balance between innovation and practicality. Our product launch was a huge success!',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=13',
     },
     {
       name: 'Jennifer White',
       role: 'COO, Enterprise Solutions',
       content: 'Outstanding partnership with Skylith. Their team is knowledgeable, professional, and results-driven.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=5',
     },
     {
       name: 'James Wilson',
       role: 'Director of IT, FinanceFirst',
       content: 'Skylith delivered a complex system on time and within budget. Their technical skills are top-notch.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=51',
     },
     {
       name: 'Maria Garcia',
       role: 'CEO, Innovation Labs',
       content: 'Working with Skylith has been transformative. They brought our vision to life with creativity and precision.',
       rating: 5,
+      image: 'https://i.pravatar.cc/150?img=32',
     },
   ];
 
@@ -1517,7 +1522,7 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Carousel Container */}
+            {/* Carousel Container - Responsive */}
             <div 
               ref={testimonialsCarouselRef}
               onMouseEnter={() => isPausedRef.current = true}
@@ -1529,10 +1534,13 @@ export default function Home() {
                 padding: '2rem 0',
               }}
             >
-              {/* Navigation Arrows */}
+              {/* Navigation Arrows - Responsive */}
               <button
-                onClick={() => setCurrentSlide((prev) => (prev - 1 + 3) % 3)}
-                className="position-absolute d-flex align-items-center justify-content-center"
+                onClick={() => {
+                  const totalSlides = Math.ceil(testimonials.length / cardsPerView);
+                  setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+                }}
+                className="position-absolute d-flex align-items-center justify-content-center d-none d-md-flex"
                 style={{
                   left: '20px',
                   top: '50%',
@@ -1540,27 +1548,26 @@ export default function Home() {
                   width: '55px',
                   height: '55px',
                   borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  background: 'rgba(139, 92, 246, 0.9)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
                   color: 'white',
                   fontSize: '1.3rem',
                   zIndex: 10,
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)',
                 }}
                 onMouseEnter={(e) => {
                   gsap.to(e.currentTarget, {
                     scale: 1.15,
-                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                    backgroundColor: 'rgba(139, 92, 246, 1)',
                     duration: 0.3,
                   });
                 }}
                 onMouseLeave={(e) => {
                   gsap.to(e.currentTarget, {
                     scale: 1,
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.9)',
                     duration: 0.3,
                   });
                 }}
@@ -1569,8 +1576,11 @@ export default function Home() {
               </button>
 
               <button
-                onClick={() => setCurrentSlide((prev) => (prev + 1) % 3)}
-                className="position-absolute d-flex align-items-center justify-content-center"
+                onClick={() => {
+                  const totalSlides = Math.ceil(testimonials.length / cardsPerView);
+                  setCurrentSlide((prev) => (prev + 1) % totalSlides);
+                }}
+                className="position-absolute d-flex align-items-center justify-content-center d-none d-md-flex"
                 style={{
                   right: '20px',
                   top: '50%',
@@ -1578,27 +1588,26 @@ export default function Home() {
                   width: '55px',
                   height: '55px',
                   borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  background: 'rgba(139, 92, 246, 0.9)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
                   color: 'white',
                   fontSize: '1.3rem',
                   zIndex: 10,
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)',
                 }}
                 onMouseEnter={(e) => {
                   gsap.to(e.currentTarget, {
                     scale: 1.15,
-                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                    backgroundColor: 'rgba(139, 92, 246, 1)',
                     duration: 0.3,
                   });
                 }}
                 onMouseLeave={(e) => {
                   gsap.to(e.currentTarget, {
                     scale: 1,
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.9)',
                     duration: 0.3,
                   });
                 }}
@@ -1606,354 +1615,163 @@ export default function Home() {
                 <FaChevronRight />
               </button>
 
-              {/* Testimonials Cards Container - Shows 3 at a time */}
+              {/* Testimonials Cards Container - Responsive */}
               <div
                 ref={testimonialsCarouselRef}
                 style={{
                   display: 'flex',
-                  width: '300%',
+                  width: `${Math.ceil(testimonials.length / cardsPerView) * 100}%`,
                   transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: `translateX(-${currentSlide * 33.333}%)`,
+                  transform: `translateX(-${currentSlide * (100 / Math.ceil(testimonials.length / cardsPerView))}%)`,
                 }}
               >
-                {/* Slide 1: Cards 0-2 */}
-                <div style={{ width: '33.333%', display: 'flex', gap: '1.5rem', padding: '0 1rem' }}>
-                  {testimonials.slice(0, 3).map((testimonial, index) => (
-                    <div
-                      key={index}
-                      ref={(el) => (testimonialsRef.current[index] = el)}
-                      style={{
-                        flex: 1,
-                        minWidth: 0,
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: '2.5rem',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          backdropFilter: 'blur(20px)',
-                          WebkitBackdropFilter: 'blur(20px)',
-                          borderRadius: '25px',
-                          border: '1px solid rgba(255, 255, 255, 0.2)',
-                          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          transition: 'all 0.3s ease',
-                        }}
-                        onMouseEnter={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1.03,
-                            y: -8,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 12px 40px 0 rgba(139, 92, 246, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1,
-                            y: 0,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                        }}
-                      >
-                        {/* Glossy shine effect */}
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '-50%',
-                            left: '-50%',
-                            width: '200%',
-                            height: '200%',
-                            background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
-                            animation: 'shine 5s infinite',
-                            animationDelay: `${index * 0.3}s`,
-                          }}
-                        />
+                {Array.from({ length: Math.ceil(testimonials.length / cardsPerView) }).map((_, slideIndex) => (
+                  <div
+                    key={slideIndex}
+                    style={{
+                      width: `${100 / Math.ceil(testimonials.length / cardsPerView)}%`,
+                      display: 'flex',
+                      gap: '1.5rem',
+                      padding: '0 1rem',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {testimonials
+                      .slice(slideIndex * cardsPerView, slideIndex * cardsPerView + cardsPerView)
+                      .map((testimonial, cardIndex) => {
+                        const index = slideIndex * cardsPerView + cardIndex;
+                        return (
+                          <div
+                            key={index}
+                            ref={(el) => (testimonialsRef.current[index] = el)}
+                            style={{
+                              flex: 1,
+                              minWidth: 0,
+                            }}
+                          >
+                            <div
+                              style={{
+                                padding: '2rem',
+                                background: 'white',
+                                borderRadius: '20px',
+                                border: '1px solid rgba(139, 92, 246, 0.1)',
+                                boxShadow: '0 10px 40px rgba(139, 92, 246, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)',
+                                position: 'relative',
+                                overflow: 'visible',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                transition: 'all 0.3s ease',
+                              }}
+                              onMouseEnter={(e) => {
+                                gsap.to(e.currentTarget, {
+                                  scale: 1.02,
+                                  y: -5,
+                                  duration: 0.3,
+                                  ease: 'power2.out',
+                                });
+                                e.currentTarget.style.boxShadow = '0 15px 50px rgba(139, 92, 246, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1)';
+                              }}
+                              onMouseLeave={(e) => {
+                                gsap.to(e.currentTarget, {
+                                  scale: 1,
+                                  y: 0,
+                                  duration: 0.3,
+                                  ease: 'power2.out',
+                                });
+                                e.currentTarget.style.boxShadow = '0 10px 40px rgba(139, 92, 246, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)';
+                              }}
+                            >
+                              {/* Client Image - Top Right Corner */}
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: '-20px',
+                                  right: '20px',
+                                  width: '70px',
+                                  height: '70px',
+                                  borderRadius: '50%',
+                                  border: '4px solid white',
+                                  boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3)',
+                                  overflow: 'hidden',
+                                  zIndex: 2,
+                                  background: 'white',
+                                }}
+                              >
+                                <Image
+                                  src={testimonial.image || 'https://i.pravatar.cc/150'}
+                                  alt={testimonial.name}
+                                  width={70}
+                                  height={70}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                  }}
+                                />
+                              </div>
 
-                        {/* Rating Stars */}
-                        <div className="mb-3" style={{ position: 'relative', zIndex: 1 }}>
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <FaStar 
-                              key={i} 
-                              style={{ 
-                                color: '#FFD700', 
-                                fontSize: '1.2rem', 
-                                marginRight: '0.3rem',
-                                filter: 'drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5))',
-                              }} 
-                            />
-                          ))}
-                        </div>
+                              {/* Rating Stars */}
+                              <div className="mb-3" style={{ position: 'relative', zIndex: 1, marginTop: '10px' }}>
+                                {[...Array(testimonial.rating)].map((_, i) => (
+                                  <FaStar 
+                                    key={i} 
+                                    style={{ 
+                                      color: '#FFD700', 
+                                      fontSize: '1.1rem', 
+                                      marginRight: '0.25rem',
+                                      filter: 'drop-shadow(0 1px 2px rgba(255, 215, 0, 0.3))',
+                                    }} 
+                                  />
+                                ))}
+                              </div>
 
-                        {/* Testimonial Content */}
-                        <p 
-                          className="mb-4" 
-                          style={{ 
-                            color: 'rgba(255, 255, 255, 0.95)', 
-                            fontStyle: 'italic', 
-                            fontSize: '1rem', 
-                            lineHeight: '1.7',
-                            position: 'relative',
-                            zIndex: 1,
-                            flex: 1,
-                          }}
-                        >
-                          "{testimonial.content}"
-                        </p>
+                              {/* Testimonial Content */}
+                              <p 
+                                className="mb-4" 
+                                style={{ 
+                                  color: '#4a5568', 
+                                  fontStyle: 'italic', 
+                                  fontSize: 'clamp(0.9rem, 2vw, 1rem)', 
+                                  lineHeight: '1.7',
+                                  position: 'relative',
+                                  zIndex: 1,
+                                  flex: 1,
+                                }}
+                              >
+                                "{testimonial.content}"
+                              </p>
 
-                        {/* Client Info */}
-                        <div 
-                          style={{ 
-                            borderTop: '1px solid rgba(255, 255, 255, 0.2)', 
-                            paddingTop: '1.2rem',
-                            position: 'relative',
-                            zIndex: 1,
-                          }}
-                        >
-                          <h5 className="mb-1" style={{ color: 'white', fontWeight: '700', fontSize: '1.1rem' }}>
-                            {testimonial.name}
-                          </h5>
-                          <p className="mb-0" style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Slide 2: Cards 3-5 */}
-                <div style={{ width: '33.333%', display: 'flex', gap: '1.5rem', padding: '0 1rem' }}>
-                  {testimonials.slice(3, 6).map((testimonial, index) => (
-                    <div
-                      key={index + 3}
-                      ref={(el) => (testimonialsRef.current[index + 3] = el)}
-                      style={{
-                        flex: 1,
-                        minWidth: 0,
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: '2.5rem',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          backdropFilter: 'blur(20px)',
-                          WebkitBackdropFilter: 'blur(20px)',
-                          borderRadius: '25px',
-                          border: '1px solid rgba(255, 255, 255, 0.2)',
-                          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          transition: 'all 0.3s ease',
-                        }}
-                        onMouseEnter={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1.03,
-                            y: -8,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 12px 40px 0 rgba(139, 92, 246, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1,
-                            y: 0,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '-50%',
-                            left: '-50%',
-                            width: '200%',
-                            height: '200%',
-                            background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
-                            animation: 'shine 5s infinite',
-                            animationDelay: `${(index + 3) * 0.3}s`,
-                          }}
-                        />
-                        <div className="mb-3" style={{ position: 'relative', zIndex: 1 }}>
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <FaStar 
-                              key={i} 
-                              style={{ 
-                                color: '#FFD700', 
-                                fontSize: '1.2rem', 
-                                marginRight: '0.3rem',
-                                filter: 'drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5))',
-                              }} 
-                            />
-                          ))}
-                        </div>
-                        <p 
-                          className="mb-4" 
-                          style={{ 
-                            color: 'rgba(255, 255, 255, 0.95)', 
-                            fontStyle: 'italic', 
-                            fontSize: '1rem', 
-                            lineHeight: '1.7',
-                            position: 'relative',
-                            zIndex: 1,
-                            flex: 1,
-                          }}
-                        >
-                          "{testimonial.content}"
-                        </p>
-                        <div 
-                          style={{ 
-                            borderTop: '1px solid rgba(255, 255, 255, 0.2)', 
-                            paddingTop: '1.2rem',
-                            position: 'relative',
-                            zIndex: 1,
-                          }}
-                        >
-                          <h5 className="mb-1" style={{ color: 'white', fontWeight: '700', fontSize: '1.1rem' }}>
-                            {testimonial.name}
-                          </h5>
-                          <p className="mb-0" style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Slide 3: Cards 6-8 */}
-                <div style={{ width: '33.333%', display: 'flex', gap: '1.5rem', padding: '0 1rem' }}>
-                  {testimonials.slice(6, 9).map((testimonial, index) => (
-                    <div
-                      key={index + 6}
-                      ref={(el) => (testimonialsRef.current[index + 6] = el)}
-                      style={{
-                        flex: 1,
-                        minWidth: 0,
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: '2.5rem',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          backdropFilter: 'blur(20px)',
-                          WebkitBackdropFilter: 'blur(20px)',
-                          borderRadius: '25px',
-                          border: '1px solid rgba(255, 255, 255, 0.2)',
-                          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-between',
-                          transition: 'all 0.3s ease',
-                        }}
-                        onMouseEnter={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1.03,
-                            y: -8,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 12px 40px 0 rgba(139, 92, 246, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          gsap.to(e.currentTarget, {
-                            scale: 1,
-                            y: 0,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          });
-                          e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '-50%',
-                            left: '-50%',
-                            width: '200%',
-                            height: '200%',
-                            background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
-                            animation: 'shine 5s infinite',
-                            animationDelay: `${(index + 6) * 0.3}s`,
-                          }}
-                        />
-                        <div className="mb-3" style={{ position: 'relative', zIndex: 1 }}>
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <FaStar 
-                              key={i} 
-                              style={{ 
-                                color: '#FFD700', 
-                                fontSize: '1.2rem', 
-                                marginRight: '0.3rem',
-                                filter: 'drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5))',
-                              }} 
-                            />
-                          ))}
-                        </div>
-                        <p 
-                          className="mb-4" 
-                          style={{ 
-                            color: 'rgba(255, 255, 255, 0.95)', 
-                            fontStyle: 'italic', 
-                            fontSize: '1rem', 
-                            lineHeight: '1.7',
-                            position: 'relative',
-                            zIndex: 1,
-                            flex: 1,
-                          }}
-                        >
-                          "{testimonial.content}"
-                        </p>
-                        <div 
-                          style={{ 
-                            borderTop: '1px solid rgba(255, 255, 255, 0.2)', 
-                            paddingTop: '1.2rem',
-                            position: 'relative',
-                            zIndex: 1,
-                          }}
-                        >
-                          <h5 className="mb-1" style={{ color: 'white', fontWeight: '700', fontSize: '1.1rem' }}>
-                            {testimonial.name}
-                          </h5>
-                          <p className="mb-0" style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.9rem' }}>
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                              {/* Client Info */}
+                              <div 
+                                style={{ 
+                                  borderTop: '1px solid rgba(139, 92, 246, 0.1)', 
+                                  paddingTop: '1.2rem',
+                                  position: 'relative',
+                                  zIndex: 1,
+                                }}
+                              >
+                                <h5 className="mb-1" style={{ color: '#2d3748', fontWeight: '700', fontSize: '1.1rem' }}>
+                                  {testimonial.name}
+                                </h5>
+                                <p className="mb-0" style={{ color: '#718096', fontSize: '0.9rem' }}>
+                                  {testimonial.role}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                ))}
               </div>
 
-              {/* Indicator Dots - 3 slides */}
+              {/* Indicator Dots - Responsive */}
               <div 
                 className="d-flex justify-content-center gap-2 mt-4"
                 style={{ position: 'relative', zIndex: 5 }}
               >
-                {[0, 1, 2].map((slideIndex) => (
+                {Array.from({ length: Math.ceil(testimonials.length / cardsPerView) }, (_, i) => i).map((slideIndex) => (
                   <button
                     key={slideIndex}
                     onClick={() => setCurrentSlide(slideIndex)}
@@ -2117,277 +1935,6 @@ export default function Home() {
                     <p className="mb-0" style={{ color: 'var(--text-light)' }}>
                       {item.tech}
                     </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Meet Our Team Section - Enhanced Glossy Design */}
-        <section 
-          ref={teamSectionRef}
-          className="section" 
-          style={{ 
-            padding: '120px 0', 
-            background: 'linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%)', 
-            position: 'relative', 
-            overflow: 'hidden' 
-          }}
-        >
-          {/* Decorative background elements */}
-          <div
-            className="position-absolute"
-            style={{
-              top: '10%',
-              right: '5%',
-              width: '300px',
-              height: '300px',
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%)',
-              borderRadius: '50%',
-              filter: 'blur(60px)',
-            }}
-          />
-          <div
-            className="position-absolute"
-            style={{
-              bottom: '10%',
-              left: '5%',
-              width: '400px',
-              height: '400px',
-              background: 'radial-gradient(circle, rgba(107, 70, 193, 0.06) 0%, transparent 70%)',
-              borderRadius: '50%',
-              filter: 'blur(80px)',
-            }}
-          />
-
-          <div className="container position-relative" style={{ zIndex: 2 }}>
-            <div className="text-center mb-5">
-              <div 
-                className="mb-4"
-                style={{
-                  display: 'inline-block',
-                  padding: '10px 24px',
-                  background: 'rgba(139, 92, 246, 0.1)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '50px',
-                  fontSize: '0.9rem',
-                  color: '#8B5CF6',
-                  border: '1px solid rgba(139, 92, 246, 0.2)',
-                  fontWeight: '600',
-                  letterSpacing: '0.5px',
-                }}
-              >
-                <FaUsers className="me-2" /> Our Team
-              </div>
-              <h2 className="gradient-text mb-4" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800' }}>
-                Meet Our Team
-              </h2>
-              <p className="lead mx-auto" style={{ color: 'var(--text-light)', maxWidth: '700px', fontSize: '1.2rem' }}>
-                The talented professionals behind Skylith's success
-              </p>
-            </div>
-            <div className="row g-4">
-              {[
-                {
-                  name: 'John Smith',
-                  role: 'CEO & Founder',
-                  description: 'Visionary leader with 15+ years of experience in technology and business strategy.',
-                  image: '👨‍💼',
-                },
-                {
-                  name: 'Sarah Johnson',
-                  role: 'CTO',
-                  description: 'Tech innovator specializing in cloud architecture and scalable solutions.',
-                  image: '👩‍💻',
-                },
-                {
-                  name: 'Mike Davis',
-                  role: 'Head of Development',
-                  description: 'Expert in full-stack development and modern software engineering practices.',
-                  image: '👨‍🔧',
-                },
-                {
-                  name: 'Emily Chen',
-                  role: 'Design Director',
-                  description: 'Creative designer focused on user experience and modern interface design.',
-                  image: '👩‍🎨',
-                },
-                {
-                  name: 'David Wilson',
-                  role: 'Head of Marketing',
-                  description: 'Strategic marketer with expertise in digital campaigns and brand development.',
-                  image: '👨‍💼',
-                },
-                {
-                  name: 'Lisa Anderson',
-                  role: 'Project Manager',
-                  description: 'Experienced PM ensuring smooth project delivery and client satisfaction.',
-                  image: '👩‍💼',
-                },
-              ].map((member, index) => (
-                <div key={index} className="col-lg-4 col-md-6">
-                  <div
-                    ref={(el) => (teamRef.current[index] = el)}
-                    className="h-100 text-center"
-                    style={{
-                      borderRadius: '30px',
-                      background: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(25px)',
-                      WebkitBackdropFilter: 'blur(25px)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
-                      padding: '2.5rem 2rem',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      gsap.to(e.currentTarget, { 
-                        scale: 1.05, 
-                        y: -10, 
-                        rotationY: 5,
-                        duration: 0.4,
-                        ease: 'back.out(1.7)',
-                      });
-                      e.currentTarget.style.boxShadow = '0 25px 70px 0 rgba(139, 92, 246, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.4)';
-                      e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-                    }}
-                    onMouseLeave={(e) => {
-                      gsap.to(e.currentTarget, { 
-                        scale: 1, 
-                        y: 0,
-                        rotationY: 0,
-                        duration: 0.4,
-                        ease: 'power2.out',
-                      });
-                      e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(31, 38, 135, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.1)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    }}
-                  >
-                    {/* Glossy shine effect */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '-50%',
-                        left: '-50%',
-                        width: '200%',
-                        height: '200%',
-                        background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)',
-                        animation: 'shine 4s infinite',
-                        animationDelay: `${index * 0.3}s`,
-                      }}
-                    />
-
-                    {/* Avatar */}
-                    <div 
-                      className="mb-4 d-flex align-items-center justify-content-center"
-                      style={{
-                        width: '120px',
-                        height: '120px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(107, 70, 193, 0.15) 100%)',
-                        margin: '0 auto',
-                        border: '3px solid rgba(139, 92, 246, 0.3)',
-                        position: 'relative',
-                        zIndex: 1,
-                        boxShadow: '0 8px 25px rgba(139, 92, 246, 0.25)',
-                      }}
-                    >
-                      <div style={{ fontSize: '4rem' }}>{member.image}</div>
-                    </div>
-
-                    {/* Name */}
-                    <h4 
-                      className="mb-2 gradient-text" 
-                      style={{ 
-                        fontSize: '1.5rem', 
-                        fontWeight: '800',
-                        position: 'relative',
-                        zIndex: 1,
-                      }}
-                    >
-                      {member.name}
-                    </h4>
-
-                    {/* Role */}
-                    <p 
-                      className="mb-3" 
-                      style={{ 
-                        color: '#8B5CF6', 
-                        fontSize: '1rem',
-                        fontWeight: '600',
-                        position: 'relative',
-                        zIndex: 1,
-                      }}
-                    >
-                      {member.role}
-                    </p>
-
-                    {/* Description */}
-                    <p 
-                      className="mb-4" 
-                      style={{ 
-                        color: 'var(--text-light)', 
-                        fontSize: '0.95rem',
-                        lineHeight: '1.6',
-                        position: 'relative',
-                        zIndex: 1,
-                      }}
-                    >
-                      {member.description}
-                    </p>
-
-                    {/* Social Links */}
-                    <div 
-                      className="d-flex gap-3 justify-content-center"
-                      style={{ position: 'relative', zIndex: 1 }}
-                    >
-                      {[
-                        { icon: FaLinkedin, color: '#0077b5', href: '#' },
-                        { icon: FaTwitter, color: '#1DA1F2', href: '#' },
-                        { icon: FaGithub, color: '#333', href: '#' },
-                        { icon: FaEnvelope, color: '#8B5CF6', href: '#' },
-                      ].map((social, socialIndex) => (
-                        <a
-                          key={socialIndex}
-                          href={social.href}
-                          className="d-flex align-items-center justify-content-center"
-                          style={{
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '12px',
-                            background: 'rgba(255, 255, 255, 0.15)',
-                            backdropFilter: 'blur(10px)',
-                            border: '1px solid rgba(255, 255, 255, 0.2)',
-                            color: social.color,
-                            textDecoration: 'none',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                          }}
-                          onMouseEnter={(e) => {
-                            gsap.to(e.currentTarget, {
-                              scale: 1.15,
-                              rotation: 10,
-                              duration: 0.3,
-                            });
-                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.3)';
-                          }}
-                          onMouseLeave={(e) => {
-                            gsap.to(e.currentTarget, {
-                              scale: 1,
-                              rotation: 0,
-                              duration: 0.3,
-                            });
-                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                          }}
-                        >
-                          <social.icon style={{ fontSize: '1.2rem' }} />
-                        </a>
-                      ))}
-                    </div>
                   </div>
                 </div>
               ))}
