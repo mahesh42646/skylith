@@ -65,7 +65,11 @@ export default function Header() {
             ? '0 10px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05)' 
             : '0 4px 30px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03)',
           borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
-          position: 'relative',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
           overflow: 'hidden',
         }}
       >

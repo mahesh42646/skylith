@@ -689,36 +689,22 @@ export default function Home() {
                   <FaStar className="me-2" /> Welcome to Skylith
                 </div>
                 <h1 ref={titleRef}
-                  className="mb-4" 
-                  style={{ 
-                    fontSize: 'clamp(3.5rem, 8vw, 7rem)', 
-                    color: 'white', 
-                    fontWeight: '900', 
-                    background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e0e0e0 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    textShadow: '0 0 50px rgba(255, 255, 255, 0.4)',
-                    lineHeight: '1.1',
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  Transform Your Business 
-                </h1>
-                <h1 
                   className="mb-5" 
                   style={{ 
-                    fontSize: 'clamp(3.5rem, 8vw, 7rem)', 
+                    fontSize: 'clamp(2.5rem, 6vw, 5rem)', 
                     color: 'white', 
-                    fontWeight: '900', 
+                    fontWeight: '800', 
                     background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e0e0e0 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
-                    lineHeight: '1.1',
-                    letterSpacing: '-0.02em',
+                    textShadow: '0 0 40px rgba(255, 255, 255, 0.3)',
+                    lineHeight: '1.2',
+                    letterSpacing: '-0.01em',
+                    textAlign: 'center',
                   }}
                 >
+                  Transform Your Business<br />
                   with Skylith
                 </h1>
                 <p 
