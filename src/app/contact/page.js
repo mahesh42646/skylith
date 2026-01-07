@@ -540,7 +540,7 @@ export default function Contact() {
                   </div>
                   <h5 className="mb-2" style={{ color: 'var(--dark-purple)', fontWeight: '700' }}>Email</h5>
                   <a href="mailto:skylithsystems@gmail.com" style={{ color: 'var(--text-light)', textDecoration: 'none', fontSize: '0.95rem' }}>
-                    skylithsystems@gmail.com
+                    team@skyliths.com
                   </a>
                 </div>
               </div>
@@ -626,7 +626,7 @@ export default function Contact() {
                   </div>
                   <h5 className="mb-2" style={{ color: 'var(--dark-purple)', fontWeight: '700' }}>Address</h5>
                   <p style={{ color: 'var(--text-light)', fontSize: '0.95rem', margin: 0 }}>
-                    418, 4th Floor, Gera Imperium Alpha, Kharadi, Pune, Maharashtra 411014
+                     4th Floor, Gera Imperium Alpha, Kharadi, Pune, Maharashtra 411014
                   </p>
                 </div>
               </div>
