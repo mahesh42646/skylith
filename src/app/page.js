@@ -617,7 +617,8 @@ export default function Home() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            paddingTop: '100px',
+            paddingTop: 'clamp(60px, 8vw, 80px)',
+            paddingBottom: 'clamp(40px, 6vw, 60px)',
             display: 'flex',
             alignItems: 'center',
           }}
@@ -668,7 +669,7 @@ export default function Home() {
               ))}
 
           <div className="container position-relative" style={{ zIndex: 2 }}>
-            <div className="row justify-content-center align-items-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
+            <div className="row justify-content-center align-items-center" style={{ minHeight: 'clamp(70vh, 85vh, 90vh)' }}>
               <div className="col-12 text-center">
                 <div 
                   className="mb-5"
@@ -689,7 +690,7 @@ export default function Home() {
                   <FaStar className="me-2" /> Welcome to Skylith
                 </div>
                 <h1 ref={titleRef}
-                  className="mb-5" 
+                  className="mb-4" 
                   style={{ 
                     fontSize: 'clamp(2.5rem, 6vw, 5rem)', 
                     color: 'white', 
@@ -702,6 +703,7 @@ export default function Home() {
                     lineHeight: '1.2',
                     letterSpacing: '-0.01em',
                     textAlign: 'center',
+                    marginBottom: 'clamp(1rem, 2.5vw, 1.5rem)',
                   }}
                 >
                   Transform Your Business<br />
@@ -709,35 +711,38 @@ export default function Home() {
                 </h1>
                 <p 
                   ref={subtitleRef}
-                  className="lead mb-5"
+                  className="lead mb-4"
                   style={{ 
-                    fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)',
+                    fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
                     color: 'rgba(255,255,255,0.95)',
-                    lineHeight: '1.8',
+                    lineHeight: '1.7',
                     textShadow: '0 2px 20px rgba(0,0,0,0.4)',
                     fontWeight: '400',
                     maxWidth: '800px',
                     margin: '0 auto',
+                    marginBottom: 'clamp(1rem, 2.5vw, 1.5rem)',
                   }}
                 >
                   Leading provider of innovative services and products. We deliver excellence through cutting-edge solutions that transform businesses.
                 </p>
-                <div ref={buttonRef} className="d-flex gap-4 flex-wrap justify-content-center">
+                <div ref={buttonRef} className="d-flex gap-3 flex-wrap justify-content-center" style={{ marginTop: 'clamp(1rem, 3vw, 2rem)' }}>
                     <Link 
                       href="/services" 
-                      className="btn px-6 py-4 fw-semibold"
+                      className="btn fw-semibold"
                       style={{ 
                         background: 'rgba(255, 255, 255, 0.95)',
                         color: '#6B46C1',
                         border: 'none',
-                        fontSize: '1.2rem',
-                        borderRadius: '16px',
+                        fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
+                        borderRadius: '14px',
+                        padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem)',
                         transition: 'all 0.3s ease',
                         boxShadow: '0 10px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255, 255, 255, 0.2)',
                         backdropFilter: 'blur(10px)',
                         fontWeight: '700',
                         position: 'relative',
                         overflow: 'hidden',
+                        whiteSpace: 'nowrap',
                       }}
                       onMouseEnter={(e) => {
                         gsap.to(e.currentTarget, {
@@ -760,18 +765,20 @@ export default function Home() {
                     </Link>
                     <Link 
                       href="/contact" 
-                      className="btn px-6 py-4 fw-semibold"
+                      className="btn fw-semibold"
                       style={{ 
-                        background: 'rgba(255, 255, 255, 0.1)',
+                        background: 'rgba(139, 92, 246, 0.9)',
                         color: 'white',
-                        border: '2px solid rgba(255, 255, 255, 0.4)',
-                        fontSize: '1.2rem',
-                        borderRadius: '16px',
+                        border: '2px solid rgba(255, 255, 255, 0.3)',
+                        fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
+                        borderRadius: '14px',
+                        padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem)',
                         transition: 'all 0.3s ease',
                         backdropFilter: 'blur(10px)',
                         fontWeight: '700',
                         position: 'relative',
                         overflow: 'hidden',
+                        whiteSpace: 'nowrap',
                       }}
                       onMouseEnter={(e) => {
                         gsap.to(e.currentTarget, {
@@ -779,8 +786,8 @@ export default function Home() {
                           scale: 1.08,
                           duration: 0.3,
                         });
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 1)';
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
                       }}
                       onMouseLeave={(e) => {
                         gsap.to(e.currentTarget, {
@@ -788,8 +795,8 @@ export default function Home() {
                           scale: 1,
                           duration: 0.3,
                         });
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.9)';
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
                       }}
                     >
                       Get Started

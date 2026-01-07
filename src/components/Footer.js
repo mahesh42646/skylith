@@ -420,81 +420,74 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6 col-12 mb-4 mb-md-0">
             <div
               style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)',
-                backdropFilter: 'blur(25px)',
-                WebkitBackdropFilter: 'blur(25px)',
-                borderRadius: '24px',
-                padding: 'clamp(1.5rem, 4vw, 2rem)',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
-                boxShadow: '0 12px 40px rgba(88, 28, 135, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                background: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(15px)',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
                 height: '100%',
                 position: 'relative',
-                overflow: 'hidden',
               }}
             >
               <h5 
                 className="fw-bold mb-4" 
                 style={{ 
-                  fontSize: 'clamp(1.3rem, 3vw, 1.6rem)',
-                  textShadow: '0 2px 15px rgba(0, 0, 0, 0.3)',
-                  color: 'rgba(255, 255, 255, 1)',
-                  fontWeight: '700',
-                  letterSpacing: '-0.02em',
+                  fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
+                  color: 'rgba(255, 255, 255, 0.95)',
                 }}
               >
                 Contact
               </h5>
               
-              <div className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column gap-3" style={{ position: 'relative', zIndex: 1 }}>
                 {/* Email Address */}
-                <div className="d-flex align-items-center" style={{ position: 'relative', zIndex: 1 }}>
+                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
                   <div
                     style={{
-                      width: 'clamp(48px, 6vw, 56px)',
-                      height: 'clamp(48px, 6vw, 56px)',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, rgba(167, 139, 250, 0.4) 0%, rgba(139, 92, 246, 0.35) 100%)',
+                      width: '42px',
+                      height: '42px',
+                      minWidth: '42px',
+                      borderRadius: '12px',
+                      background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginRight: 'clamp(0.75rem, 2vw, 1rem)',
+                      marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.25)',
-                      boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1) rotate(5deg)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaEnvelope style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: 'white' }} />
+                    <FaEnvelope style={{ fontSize: '1rem', color: 'white' }} />
                   </div>
                   <a 
                     href="mailto:team@skyliths.com" 
                     className="text-white"
                     style={{ 
                       textDecoration: 'none',
-                      fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
-                      fontWeight: '500',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                      transition: 'all 0.3s ease',
                       wordBreak: 'break-word',
-                      lineHeight: '1.4',
-                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      lineHeight: '1.5',
+                      opacity: 0.9,
+                      flex: 1,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.opacity = '1';
-                      e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.4)';
-                      e.currentTarget.style.transform = 'translateX(4px)';
+                      e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.3)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = '0.95';
-                      e.currentTarget.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
-                      e.currentTarget.style.transform = 'translateX(0)';
+                      e.currentTarget.style.opacity = '0.9';
+                      e.currentTarget.style.textShadow = 'none';
                     }}
                   >
                     team@skyliths.com
@@ -502,53 +495,51 @@ export default function Footer() {
                 </div>
 
                 {/* Phone Number */}
-                <div className="d-flex align-items-center" style={{ position: 'relative', zIndex: 1 }}>
+                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
                   <div
                     style={{
-                      width: 'clamp(48px, 6vw, 56px)',
-                      height: 'clamp(48px, 6vw, 56px)',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, rgba(167, 139, 250, 0.4) 0%, rgba(139, 92, 246, 0.35) 100%)',
+                      width: '42px',
+                      height: '42px',
+                      minWidth: '42px',
+                      borderRadius: '12px',
+                      background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginRight: 'clamp(0.75rem, 2vw, 1rem)',
+                      marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.25)',
-                      boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1) rotate(-5deg)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaPhone style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: 'white', transform: 'rotate(180deg)' }} />
+                    <FaPhone style={{ fontSize: '1rem', color: 'white', transform: 'rotate(180deg)' }} />
                   </div>
                   <a 
                     href="tel:+919209965565" 
                     className="text-white"
                     style={{ 
                       textDecoration: 'none',
-                      fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
-                      fontWeight: '500',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      lineHeight: '1.4',
-                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                      transition: 'all 0.3s ease',
+                      lineHeight: '1.5',
+                      opacity: 0.9,
+                      flex: 1,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.opacity = '1';
-                      e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.4)';
-                      e.currentTarget.style.transform = 'translateX(4px)';
+                      e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.3)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = '0.95';
-                      e.currentTarget.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
-                      e.currentTarget.style.transform = 'translateX(0)';
+                      e.currentTarget.style.opacity = '0.9';
+                      e.currentTarget.style.textShadow = 'none';
                     }}
                   >
                     +919209965565
@@ -556,40 +547,39 @@ export default function Footer() {
                 </div>
 
                 {/* Location */}
-                <div className="d-flex align-items-center" style={{ position: 'relative', zIndex: 1 }}>
+                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
                   <div
                     style={{
-                      width: 'clamp(48px, 6vw, 56px)',
-                      height: 'clamp(48px, 6vw, 56px)',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, rgba(167, 139, 250, 0.4) 0%, rgba(139, 92, 246, 0.35) 100%)',
+                      width: '42px',
+                      height: '42px',
+                      minWidth: '42px',
+                      borderRadius: '12px',
+                      background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginRight: 'clamp(0.75rem, 2vw, 1rem)',
+                      marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.25)',
-                      boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1) rotate(5deg)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaMapMarkerAlt style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', color: 'white' }} />
+                    <FaMapMarkerAlt style={{ fontSize: '1rem', color: 'white' }} />
                   </div>
                   <span 
                     style={{ 
-                      fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)',
-                      fontWeight: '500',
-                      lineHeight: '1.4',
-                      color: 'rgba(255, 255, 255, 0.95)',
-                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
+                      lineHeight: '1.5',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      flex: 1,
                     }}
                   >
                     Kharadi,Pune
