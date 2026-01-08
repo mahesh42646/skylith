@@ -8,6 +8,11 @@ import FloatingHelpPopup from '@/components/FloatingHelpPopup';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { 
+  FaCode, FaHandshake, FaTools, FaGraduationCap, 
+  FaRocket, FaCheckCircle, FaArrowRight, FaChevronLeft,
+  FaLaptopCode, FaUsers, FaChartLine, FaShieldAlt
+} from 'react-icons/fa';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +23,7 @@ const services = [
     description: 'Comprehensive service offerings tailored to your business needs.',
     features: ['Custom Development', 'Consulting Services', 'Support & Maintenance', 'Training Programs'],
     icon: '🎯',
+    featureIcons: [FaCode, FaHandshake, FaTools, FaGraduationCap],
     content: `At Skylith, we offer comprehensive service-based solutions designed to meet your unique business requirements. Our team of experienced professionals works closely with you to understand your challenges and deliver tailored services that drive results.
 
 **Custom Development**
@@ -298,6 +304,11 @@ export default function ServiceDetail() {
   const router = useRouter();
   const contentRef = useRef(null);
   const heroRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const featureCardsRef = useRef([]);
+  const parallaxRef = useRef(null);
+  const floatingShapesRef = useRef([]);
 
   const service = services.find(s => s.slug === params.slug);
 
@@ -313,17 +324,109 @@ export default function ServiceDetail() {
     ScrollTrigger.getAll().forEach(st => st.kill());
     ScrollTrigger.refresh();
 
+    // Hero animations
+    if (titleRef.current) {
+      gsap.set(titleRef.current, { opacity: 0, y: 30 });
+      const anim = gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.2,
+        ease: 'power2.out',
+      });
+      animations.push(anim);
+    }
+
+    if (subtitleRef.current) {
+      gsap.set(subtitleRef.current, { opacity: 0, y: 20 });
+      const anim = gsap.to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.4,
+        ease: 'power2.out',
+      });
+      animations.push(anim);
+    }
+
+    // Parallax effect
+    if (parallaxRef.current && heroRef.current) {
+      gsap.set(parallaxRef.current, { yPercent: 0 });
+      const anim = gsap.to(parallaxRef.current, {
+        yPercent: -50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+      animations.push(anim);
+      if (anim.scrollTrigger) {
+        scrollTriggers.push(anim.scrollTrigger);
+      }
+    }
+
+    // Floating shapes animation
+    floatingShapesRef.current.forEach((shape, index) => {
+      if (shape) {
+        gsap.set(shape, { opacity: 0, scale: 0 });
+        const anim = gsap.to(shape, {
+          opacity: 0.6,
+          scale: 1,
+          duration: 1.5,
+          delay: 0.5 + index * 0.2,
+          ease: 'power2.out',
+        });
+        animations.push(anim);
+        
+        gsap.to(shape, {
+          y: '+=30',
+          x: '+=20',
+          duration: 3 + index * 0.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+    });
+
+    // Content animation
     if (contentRef.current) {
       gsap.set(contentRef.current, { opacity: 0, y: 30 });
       const anim = gsap.to(contentRef.current, {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        delay: 0.3,
+        delay: 0.6,
         ease: 'power2.out',
       });
       animations.push(anim);
     }
+
+    // Feature cards animation
+    featureCardsRef.current.forEach((card, index) => {
+      if (card) {
+        gsap.set(card, { opacity: 0, y: 40 });
+        const anim = gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 0.8 + index * 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+        animations.push(anim);
+        if (anim.scrollTrigger) {
+          scrollTriggers.push(anim.scrollTrigger);
+        }
+      }
+    });
 
     return () => {
       animations.forEach(anim => {
@@ -347,44 +450,163 @@ export default function ServiceDetail() {
   return (
     <>
       <Header />
-      <main>
+      <main style={{ overflow: 'hidden' }}>
+        {/* Hero Section */}
         <section 
           ref={heroRef}
-          className="hero-section"
           style={{ 
-            minHeight: '40vh',
+            minHeight: '60vh',
             position: 'relative',
             overflow: 'hidden',
-            background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.98) 40%, rgba(107, 70, 193, 0.05) 100%)',
-            paddingTop: '200px',
-            paddingBottom: '60px',
+            background: 'linear-gradient(135deg, #2D1B4E 0%, #6B46C1 50%, #8B5CF6 100%)',
+            paddingTop: 'clamp(120px, 15vw, 180px)',
+            paddingBottom: 'clamp(60px, 8vw, 100px)',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
+          {/* Parallax Background */}
+          <div 
+            ref={parallaxRef}
+            className="position-absolute w-100 h-100"
+            style={{
+              top: 0,
+              left: 0,
+              zIndex: 0,
+              background: 'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.3) 0%, transparent 50%)',
+            }}
+          />
+
+          {/* Floating Glossy Shapes */}
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              ref={(el) => (floatingShapesRef.current[i] = el)}
+              className="position-absolute"
+              style={{
+                width: `${100 + i * 30}px`,
+                height: `${100 + i * 30}px`,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, rgba(255, 255, 255, ${0.15 - i * 0.02}) 0%, transparent 70%)`,
+                filter: 'blur(40px)',
+                top: `${10 + i * 15}%`,
+                left: `${5 + i * 12}%`,
+                zIndex: 1,
+                pointerEvents: 'none',
+              }}
+            />
+          ))}
+
+          {/* Dark overlay */}
+          <div 
+            className="position-absolute w-100 h-100"
+            style={{
+              top: 0,
+              left: 0,
+              zIndex: 1,
+              background: 'linear-gradient(135deg, rgba(45, 27, 78, 0.4) 0%, rgba(107, 70, 193, 0.3) 100%)',
+            }}
+          />
+
           <div className="container position-relative" style={{ zIndex: 2 }}>
             <div className="row">
               <div className="col-lg-10 mx-auto">
                 <Link 
                   href="/services" 
-                  className="text-decoration-none mb-4 d-inline-block"
-                  style={{ color: 'var(--light-purple)' }}
+                  className="text-decoration-none mb-4 d-inline-flex align-items-center"
+                  style={{ 
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                    backdropFilter: 'blur(15px)',
+                    WebkitBackdropFilter: 'blur(15px)',
+                    borderRadius: '14px',
+                    padding: 'clamp(0.625rem, 1.5vw, 0.875rem) clamp(1rem, 2vw, 1.5rem)',
+                    color: 'white',
+                    fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                    fontWeight: '600',
+                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                  }}
                   onClick={handleLinkClick}
+                  onMouseEnter={(e) => {
+                    gsap.to(e.currentTarget, {
+                      x: -5,
+                      scale: 1.02,
+                      duration: 0.3,
+                    });
+                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    gsap.to(e.currentTarget, {
+                      x: 0,
+                      scale: 1,
+                      duration: 0.3,
+                    });
+                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                  }}
                 >
-                  ← Back to Services
+                  {/* Glossy shine effect */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-50%',
+                      left: '-50%',
+                      width: '200%',
+                      height: '200%',
+                      background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
+                      animation: 'shine 5s infinite',
+                    }}
+                  />
+                  <FaChevronLeft 
+                    className="me-2" 
+                    style={{ 
+                      fontSize: 'clamp(0.75rem, 1.2vw, 0.9rem)',
+                      position: 'relative',
+                      zIndex: 1,
+                    }} 
+                  />
+                  <span style={{ position: 'relative', zIndex: 1 }}>
+                    Back to Services
+                  </span>
                 </Link>
-                <div className="text-center mb-4" style={{ fontSize: '4rem' }}>
+                <div className="text-center mb-4" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
                   {service.icon}
                 </div>
                 <h1 
+                  ref={titleRef}
                   className="text-center fw-bold mb-4"
                   style={{ 
-                    fontSize: 'clamp(2rem, 4vw, 3rem)',
-                    color: 'var(--dark-purple)',
+                    fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+                    color: 'white',
                     lineHeight: '1.2',
+                    textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                    background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #e0e0e0 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                   }}
                 >
                   {service.title}
                 </h1>
-                <p className="text-center mb-0" style={{ color: 'var(--text-light)', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>
+                <p 
+                  ref={subtitleRef}
+                  className="text-center mb-0" 
+                  style={{ 
+                    color: 'rgba(255, 255, 255, 0.95)', 
+                    fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                    maxWidth: '700px', 
+                    margin: '0 auto',
+                    lineHeight: '1.6',
+                    textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+                  }}
+                >
                   {service.description}
                 </p>
               </div>
@@ -392,35 +614,185 @@ export default function ServiceDetail() {
           </div>
         </section>
 
-        <section className="section" style={{ padding: '60px 0' }}>
+        {/* Key Features Section */}
+        <section className="section" style={{ background: '#FFFFFF', padding: 'clamp(60px, 8vw, 100px) 0' }}>
+          <div className="container">
+            <div className="row mb-5">
+              <div className="col-12 text-center">
+                <h2 
+                  className="fw-bold mb-3"
+                  style={{ 
+                    fontSize: 'clamp(2rem, 4vw, 3rem)',
+                    color: '#2D1B4E',
+                    lineHeight: '1.2',
+                  }}
+                >
+                  Key Features
+                </h2>
+                <p 
+                  style={{ 
+                    color: '#6B7280',
+                    fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                  }}
+                >
+                  Comprehensive solutions designed to drive your business forward
+                </p>
+              </div>
+            </div>
+            <div className="row g-4">
+              {service.features.map((feature, idx) => {
+                const IconComponent = service.featureIcons?.[idx] || FaCheckCircle;
+                return (
+                  <div key={idx} className="col-lg-3 col-md-6 col-12">
+                    <div
+                      ref={(el) => (featureCardsRef.current[idx] = el)}
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.98) 100%)',
+                        borderRadius: '20px',
+                        padding: 'clamp(1.5rem, 3vw, 2.5rem)',
+                        height: '100%',
+                        border: '2px solid rgba(139, 92, 246, 0.1)',
+                        boxShadow: '0 8px 30px rgba(139, 92, 246, 0.08)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                      onMouseEnter={(e) => {
+                        gsap.to(e.currentTarget, {
+                          y: -10,
+                          scale: 1.02,
+                          duration: 0.3,
+                        });
+                        e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                        e.currentTarget.style.boxShadow = '0 15px 40px rgba(139, 92, 246, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        gsap.to(e.currentTarget, {
+                          y: 0,
+                          scale: 1,
+                          duration: 0.3,
+                        });
+                        e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+                        e.currentTarget.style.boxShadow = '0 8px 30px rgba(139, 92, 246, 0.08)';
+                      }}
+                    >
+                      {/* Glossy shine effect */}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '-50%',
+                          left: '-50%',
+                          width: '200%',
+                          height: '200%',
+                          background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
+                          animation: 'shine 5s infinite',
+                        }}
+                      />
+                      <div 
+                        style={{
+                          width: 'clamp(60px, 6vw, 80px)',
+                          height: 'clamp(60px, 6vw, 80px)',
+                          borderRadius: '18px',
+                          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(167, 139, 250, 0.1) 100%)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '1.5rem',
+                          position: 'relative',
+                          zIndex: 1,
+                          border: '1px solid rgba(139, 92, 246, 0.2)',
+                        }}
+                      >
+                        <IconComponent 
+                          style={{ 
+                            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                            color: '#8B5CF6',
+                          }} 
+                        />
+                      </div>
+                      <h4 
+                        style={{ 
+                          fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                          color: '#2D1B4E',
+                          fontWeight: '700',
+                          marginBottom: '0.75rem',
+                          position: 'relative',
+                          zIndex: 1,
+                        }}
+                      >
+                        {feature}
+                      </h4>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Content Section */}
+        <section className="section" style={{ background: '#F8F9FA', padding: 'clamp(60px, 8vw, 100px) 0' }}>
           <div className="container">
             <div className="row">
-              <div className="col-lg-8 mx-auto">
+              <div className="col-lg-10 mx-auto">
                 <div 
                   ref={contentRef}
                   className="service-content"
                   style={{
-                    fontSize: '1.1rem',
-                    lineHeight: '1.8',
-                    color: 'var(--text-light)',
+                    background: 'white',
+                    borderRadius: '24px',
+                    padding: 'clamp(2rem, 4vw, 3.5rem)',
+                    boxShadow: '0 10px 40px rgba(139, 92, 246, 0.08)',
+                    border: '1px solid rgba(139, 92, 246, 0.1)',
                   }}
                 >
                   {service.content.split('\n\n').map((paragraph, index) => {
                     if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
                       const text = paragraph.replace(/\*\*/g, '');
                       return (
-                        <h3 key={index} className="mt-5 mb-3" style={{ color: 'var(--dark-purple)', fontSize: '1.5rem' }}>
+                        <h3 
+                          key={index} 
+                          className="mt-5 mb-4" 
+                          style={{ 
+                            color: '#2D1B4E', 
+                            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                            fontWeight: '700',
+                            lineHeight: '1.3',
+                          }}
+                        >
                           {text}
                         </h3>
+                      );
+                    }
+                    if (paragraph.startsWith('-')) {
+                      const items = paragraph.split('\n').filter(item => item.trim().startsWith('-'));
+                      return (
+                        <ul key={index} className="mb-4" style={{ paddingLeft: '1.5rem' }}>
+                          {items.map((item, i) => (
+                            <li 
+                              key={i}
+                              style={{ 
+                                color: '#4B5563',
+                                fontSize: 'clamp(1rem, 1.8vw, 1.1rem)',
+                                lineHeight: '1.8',
+                                marginBottom: '0.5rem',
+                              }}
+                            >
+                              {item.replace(/^-\s*/, '')}
+                            </li>
+                          ))}
+                        </ul>
                       );
                     }
                     if (paragraph.startsWith('**')) {
                       const parts = paragraph.split('**');
                       return (
-                        <p key={index} className="mb-4">
+                        <p key={index} className="mb-4" style={{ color: '#4B5563', fontSize: 'clamp(1rem, 1.8vw, 1.1rem)', lineHeight: '1.8' }}>
                           {parts.map((part, i) => 
                             i % 2 === 1 ? (
-                              <strong key={i} style={{ color: 'var(--dark-purple)' }}>{part}</strong>
+                              <strong key={i} style={{ color: '#8B5CF6', fontWeight: '600' }}>{part}</strong>
                             ) : (
                               <span key={i}>{part}</span>
                             )
@@ -429,7 +801,15 @@ export default function ServiceDetail() {
                       );
                     }
                     return (
-                      <p key={index} className="mb-4">
+                      <p 
+                        key={index} 
+                        className="mb-4" 
+                        style={{ 
+                          color: '#4B5563', 
+                          fontSize: 'clamp(1rem, 1.8vw, 1.1rem)', 
+                          lineHeight: '1.8',
+                        }}
+                      >
                         {paragraph}
                       </p>
                     );
@@ -440,51 +820,126 @@ export default function ServiceDetail() {
           </div>
         </section>
 
-        <section className="section" style={{ background: 'var(--light-bg)', padding: '60px 0' }}>
-          <div className="container">
+        {/* CTA Section */}
+        <section className="section" style={{ background: 'linear-gradient(135deg, #2D1B4E 0%, #6B46C1 50%, #8B5CF6 100%)', padding: 'clamp(60px, 8vw, 100px) 0', position: 'relative', overflow: 'hidden' }}>
+          {/* Decorative elements */}
+          <div
+            className="position-absolute"
+            style={{
+              top: '-100px',
+              right: '-100px',
+              width: '300px',
+              height: '300px',
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+              borderRadius: '50%',
+              filter: 'blur(60px)',
+            }}
+          />
+          <div
+            className="position-absolute"
+            style={{
+              bottom: '-100px',
+              left: '-100px',
+              width: '300px',
+              height: '300px',
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+              borderRadius: '50%',
+              filter: 'blur(60px)',
+            }}
+          />
+          
+          <div className="container position-relative" style={{ zIndex: 2 }}>
             <div className="row">
               <div className="col-lg-8 mx-auto">
-                <div className="card border-0 shadow-sm glass p-4" style={{ borderRadius: '20px' }}>
-                  <h3 className="mb-3" style={{ color: 'var(--dark-purple)' }}>Key Features</h3>
-                  <ul className="list-unstyled">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="mb-2" style={{ color: 'var(--text-light)' }}>
-                        <span className="me-2" style={{ color: 'var(--light-purple)' }}>✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                <div 
+                  className="text-center"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                    backdropFilter: 'blur(25px)',
+                    WebkitBackdropFilter: 'blur(25px)',
+                    borderRadius: '28px',
+                    padding: 'clamp(2.5rem, 5vw, 4rem)',
+                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Glossy shine effect */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-50%',
+                      left: '-50%',
+                      width: '200%',
+                      height: '200%',
+                      background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
+                      animation: 'shine 5s infinite',
+                    }}
+                  />
+                  
+                  <h2 
+                    className="mb-4 fw-bold"
+                    style={{ 
+                      fontSize: 'clamp(2rem, 4vw, 3rem)',
+                      color: 'white',
+                      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                  >
+                    Ready to Get Started?
+                  </h2>
+                  <p 
+                    className="mb-4 lead"
+                    style={{ 
+                      fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                      color: 'rgba(255, 255, 255, 0.95)',
+                      lineHeight: '1.6',
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                  >
+                    Contact us today to discuss how we can help with {service.title.toLowerCase()}.
+                  </p>
+                  <Link 
+                    href="/contact" 
+                    className="btn btn-lg fw-semibold d-inline-flex align-items-center"
+                    style={{ 
+                      background: 'white',
+                      color: '#8B5CF6',
+                      border: 'none',
+                      borderRadius: '16px',
+                      padding: 'clamp(0.875rem, 2vw, 1.125rem) clamp(2rem, 4vw, 3rem)',
+                      fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                    onClick={handleLinkClick}
+                    onMouseEnter={(e) => {
+                      gsap.to(e.currentTarget, {
+                        y: -5,
+                        scale: 1.05,
+                        duration: 0.3,
+                      });
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      gsap.to(e.currentTarget, {
+                        y: 0,
+                        scale: 1,
+                        duration: 0.3,
+                      });
+                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+                    }}
+                  >
+                    Contact Us
+                    <FaArrowRight className="ms-2" style={{ fontSize: '0.9rem' }} />
+                  </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section" style={{ padding: '60px 0' }}>
-          <div className="container">
-            <div 
-              className="glass rounded-4 p-5 text-center"
-              style={{
-                background: 'var(--gradient-primary)',
-                color: 'white',
-              }}
-            >
-              <h2 className="mb-4">Ready to Get Started?</h2>
-              <p className="mb-4 lead">
-                Contact us today to discuss how we can help with {service.title.toLowerCase()}.
-              </p>
-              <Link 
-                href="/contact" 
-                className="btn btn-lg rounded-pill px-5 py-3 fw-semibold"
-                style={{ 
-                  background: 'white', 
-                  color: 'var(--dark-purple)',
-                  border: 'none',
-                }}
-                onClick={handleLinkClick}
-              >
-                Contact Us
-              </Link>
             </div>
           </div>
         </section>

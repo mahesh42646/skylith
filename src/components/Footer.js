@@ -426,7 +426,6 @@ export default function Footer() {
                 padding: '1.5rem',
                 border: '1px solid rgba(255, 255, 255, 0.15)',
                 height: '100%',
-                position: 'relative',
               }}
             >
               <h5 
@@ -439,88 +438,59 @@ export default function Footer() {
               >
                 Contact
               </h5>
-              
-              <div className="d-flex flex-column gap-3" style={{ position: 'relative', zIndex: 1 }}>
-                {/* Email Address */}
-                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
+              <ul className="list-unstyled mb-0" style={{ opacity: 0.95 }}>
+                <li className="mb-3 d-flex align-items-start">
                   <div
                     style={{
-                      width: '42px',
-                      height: '42px',
-                      minWidth: '42px',
-                      borderRadius: '12px',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '10px',
                       background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaEnvelope style={{ fontSize: '1rem', color: 'white' }} />
+                    <FaEnvelope style={{ fontSize: '0.9rem', color: 'white' }} />
                   </div>
                   <a 
-                    href="mailto:team@skyliths.com" 
+                    href="mailto:skylithsystems@gmail.com" 
                     className="text-white"
                     style={{ 
                       textDecoration: 'none',
                       fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                       transition: 'all 0.3s ease',
                       wordBreak: 'break-word',
-                      lineHeight: '1.5',
-                      opacity: 0.9,
-                      flex: 1,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.opacity = '1';
                       e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.3)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = '0.9';
+                      e.currentTarget.style.opacity = '0.95';
                       e.currentTarget.style.textShadow = 'none';
                     }}
                   >
-                    team@skyliths.com
+                     team@skyliths.com
                   </a>
-                </div>
-
-                {/* Phone Number */}
-                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
+                </li>
+                <li className="mb-3 d-flex align-items-start">
                   <div
                     style={{
-                      width: '42px',
-                      height: '42px',
-                      minWidth: '42px',
-                      borderRadius: '12px',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '10px',
                       background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaPhone style={{ fontSize: '1rem', color: 'white', transform: 'rotate(180deg)' }} />
+                    <FaPhone style={{ fontSize: '0.9rem', color: 'white', transform: 'rotate(80deg)' }} />
                   </div>
                   <a 
                     href="tel:+919209965565" 
@@ -529,63 +499,40 @@ export default function Footer() {
                       textDecoration: 'none',
                       fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
                       transition: 'all 0.3s ease',
-                      lineHeight: '1.5',
-                      opacity: 0.9,
-                      flex: 1,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.opacity = '1';
                       e.currentTarget.style.textShadow = '0 2px 8px rgba(255, 255, 255, 0.3)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = '0.9';
+                      e.currentTarget.style.opacity = '0.95';
                       e.currentTarget.style.textShadow = 'none';
                     }}
                   >
                     +919209965565
                   </a>
-                </div>
-
-                {/* Location */}
-                <div className="d-flex align-items-start" style={{ minHeight: 'auto' }}>
+                </li>
+                <li className="mb-0 d-flex align-items-start">
                   <div
                     style={{
-                      width: '42px',
-                      height: '42px',
-                      minWidth: '42px',
-                      borderRadius: '12px',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '10px',
                       background: 'rgba(255, 255, 255, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginRight: '0.75rem',
                       flexShrink: 0,
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)';
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                      e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    <FaMapMarkerAlt style={{ fontSize: '1rem', color: 'white' }} />
+                    <FaMapMarkerAlt style={{ fontSize: '0.9rem', color: 'white' }} />
                   </div>
-                  <span 
-                    style={{ 
-                      fontSize: 'clamp(0.85rem, 2vw, 0.95rem)',
-                      lineHeight: '1.5',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                      flex: 1,
-                    }}
-                  >
-                    Kharadi,Pune
+                  <span style={{ fontSize: 'clamp(0.85rem, 2vw, 0.95rem)', lineHeight: '1.6' }}>
+                    Kharadi,Pune  
                   </span>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

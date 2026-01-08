@@ -617,8 +617,7 @@ export default function Home() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            paddingTop: 'clamp(60px, 8vw, 80px)',
-            paddingBottom: 'clamp(40px, 6vw, 60px)',
+            paddingTop: '100px',
             display: 'flex',
             alignItems: 'center',
           }}
@@ -669,7 +668,7 @@ export default function Home() {
               ))}
 
           <div className="container position-relative" style={{ zIndex: 2 }}>
-            <div className="row justify-content-center align-items-center" style={{ minHeight: 'clamp(70vh, 85vh, 90vh)' }}>
+            <div className="row justify-content-center align-items-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
               <div className="col-12 text-center">
                 <div 
                   className="mb-5"
@@ -690,7 +689,7 @@ export default function Home() {
                   <FaStar className="me-2" /> Welcome to Skylith
                 </div>
                 <h1 ref={titleRef}
-                  className="mb-4" 
+                  className="mb-5" 
                   style={{ 
                     fontSize: 'clamp(2.5rem, 6vw, 5rem)', 
                     color: 'white', 
@@ -703,7 +702,6 @@ export default function Home() {
                     lineHeight: '1.2',
                     letterSpacing: '-0.01em',
                     textAlign: 'center',
-                    marginBottom: 'clamp(1rem, 2.5vw, 1.5rem)',
                   }}
                 >
                   Transform Your Business<br />
@@ -711,21 +709,20 @@ export default function Home() {
                 </h1>
                 <p 
                   ref={subtitleRef}
-                  className="lead mb-4"
+                  className="lead mb-5"
                   style={{ 
-                    fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
+                    fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)',
                     color: 'rgba(255,255,255,0.95)',
-                    lineHeight: '1.7',
+                    lineHeight: '1.8',
                     textShadow: '0 2px 20px rgba(0,0,0,0.4)',
                     fontWeight: '400',
                     maxWidth: '800px',
                     margin: '0 auto',
-                    marginBottom: 'clamp(1rem, 2.5vw, 1.5rem)',
                   }}
                 >
                   Leading provider of innovative services and products. We deliver excellence through cutting-edge solutions that transform businesses.
                 </p>
-                <div ref={buttonRef} className="d-flex gap-3 flex-wrap justify-content-center" style={{ marginTop: 'clamp(1rem, 3vw, 2rem)' }}>
+                <div ref={buttonRef} className="d-flex gap-3 flex-wrap justify-content-center">
                     <Link 
                       href="/services" 
                       className="btn fw-semibold"
@@ -735,8 +732,11 @@ export default function Home() {
                         border: 'none',
                         fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
                         borderRadius: '14px',
-                        padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem)',
-                        transition: 'all 0.3s ease',
+                        paddingTop: 'clamp(0.5rem, 1.2vw, 0.75rem)',
+                        paddingBottom: 'clamp(0.5rem, 1.2vw, 0.75rem)',
+                        paddingLeft: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                        paddingRight: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         boxShadow: '0 10px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255, 255, 255, 0.2)',
                         backdropFilter: 'blur(10px)',
                         fontWeight: '700',
@@ -772,8 +772,11 @@ export default function Home() {
                         border: '2px solid rgba(255, 255, 255, 0.3)',
                         fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
                         borderRadius: '14px',
-                        padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem)',
-                        transition: 'all 0.3s ease',
+                        paddingTop: 'clamp(0.5rem, 1.2vw, 0.75rem)',
+                        paddingBottom: 'clamp(0.5rem, 1.2vw, 0.75rem)',
+                        paddingLeft: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                        paddingRight: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         backdropFilter: 'blur(10px)',
                         fontWeight: '700',
                         position: 'relative',
